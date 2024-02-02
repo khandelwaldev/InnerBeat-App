@@ -23,6 +23,27 @@ import com.slyro.innerbeat.R
 import com.slyro.innerbeat.ui.component.IconButton
 import com.slyro.innerbeat.ui.component.PreferenceEntry
 import com.slyro.innerbeat.ui.utils.backToMain
+import android.util.Log
+import androidx.compose.runtime.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+
+data class GitHubRelease(
+    val name: String,
+    val assets: List<GitHubAsset>
+)
+
+data class GitHubAsset(
+    val browser_download_url: String
+)
+
+// Retrofit service interface
+interface GitHubService {
+    @GET("repos/khandelwaldev/InnerBeat/releases/latest")
+    suspend fun getLatestRelease(): GitHubRelease
+}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +95,27 @@ fun SettingsScreen(
             onClick = { navController.navigate("settings/about") }
         )
 
-        if (latestVersion >= BuildConfig.VERSION_CODE) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api.github.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        // Fetch the latest release using Retrofit (you may want to handle this asynchronously)
+        val githubService = retrofit.create(GitHubService::class.java)
+        var latestRelease by remember { mutableStateOf<GitHubRelease?>(null) }
+
+        // Fetch latest release when the composable is first composed
+        LaunchedEffect(Unit) {
+            try {
+                latestRelease = githubService.getLatestRelease()
+            } catch (e: Exception) {
+                // Handle network request error
+                Log.e("SettingsScreen", "Error fetching latest release: $e")
+            }
+        }
+
+        if (latestRelease?.name != BuildConfig.VERSION_NAME) {
+            // Show the update button
             PreferenceEntry(
                 title = {
                     Text(
@@ -89,7 +130,10 @@ fun SettingsScreen(
                     }
                 },
                 onClick = {
-                    uriHandler.openUri("https://github.com/khandelwaldev/InnerBeat/releases/latest")
+                    // Open the download URL when the button is clicked
+                    latestRelease?.assets?.firstOrNull()?.browser_download_url?.let { url ->
+                        uriHandler.openUri(url)
+                    }
                 }
             )
         }

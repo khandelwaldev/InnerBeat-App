@@ -25,8 +25,8 @@ buildToolsVersion = "30.0.3"
         applicationId = "com.slyro.innerbeat"
         minSdk = 24
         targetSdk = 33
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -147,6 +147,10 @@ dependencies {
     implementation(projects.kugou)
 
     coreLibraryDesugaring(libs.desugaring)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.8.8")
 
     "fullImplementation"(platform(libs.firebase.bom))
     "fullImplementation"(libs.firebase.analytics)
