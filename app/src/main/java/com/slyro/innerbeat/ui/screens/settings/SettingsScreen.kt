@@ -74,7 +74,7 @@ fun SettingsScreen(
             onClick = { navController.navigate("settings/about") }
         )
 
-        if (latestVersion > BuildConfig.VERSION_CODE) {
+        if (latestVersion >= BuildConfig.VERSION_CODE) {
             PreferenceEntry(
                 title = {
                     Text(
