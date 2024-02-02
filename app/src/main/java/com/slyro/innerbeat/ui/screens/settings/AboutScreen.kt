@@ -73,7 +73,7 @@ fun AboutScreen(
             verticalAlignment = Alignment.Top,
         ) {
             Text(
-                text = "InnerTune",
+                text = "InnerBeat",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
@@ -129,7 +129,7 @@ fun AboutScreen(
         Spacer(Modifier.height(4.dp))
 
         Text(
-            text = "by Zion Huang",
+            text = "by Dev Khandelwal",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.secondary
         )
@@ -138,7 +138,7 @@ fun AboutScreen(
 
         Row {
             IconButton(
-                onClick = { uriHandler.openUri("https://github.com/khandelwaldev/InnerBeat") }
+                onClick = { uriHandler.openUri("https://github.com/khandelwaldev/") }
             ) {
                 Icon(
                     painter = painterResource(R.drawable.github),
@@ -147,10 +147,10 @@ fun AboutScreen(
             }
 
             IconButton(
-                onClick = { uriHandler.openUri("https://liberapay.com/") }
+                onClick = { uriHandler.openUri("https://instagram.com/i.slyro") }
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.liberapay),
+                    painter = painterResource(R.drawable.instagram),
                     contentDescription = null
                 )
             }
@@ -160,6 +160,15 @@ fun AboutScreen(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.buymeacoffee),
+                    contentDescription = null
+                )
+            }
+
+            IconButton(
+                onClick = { uriHandler.openUri("https://slyro.vercel.app/about") }
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.about),
                     contentDescription = null
                 )
             }
